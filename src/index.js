@@ -7,53 +7,67 @@ const root = createRoot(container)
 const Header = (props) => {
   return(
     <div>
-    <p>Materia {props.course}</p>
+    <h1>Materia {props.course.name}</h1>
     </div>
   )
 }
-
-const Content = (props) => {
-  return(
-    <div>
-    <p>Contenido: </p>
-    <ul>
-      {props.array.map(item => (
-        <li key={item.key}>{item.titulo} {item.ejercicios}</li>
-      ))}
-    </ul>
-    </div>
-  )
-}
-
 const Total = (props) => {
   return(
     <div>
-    <p>Total de ejercicios {props.Total}</p>
+    <p>Total de ejercicios {props.course.parts[0].exercises + props.course.parts[1].exercises + props.course.parts[2].exercises}</p>
     </div>
   )
 }
-
+ 
+const Content = (props) => {
+  return(
+    <div>
+      <Part part1 = {props.course.parts[0].name} exercises1 = {props.course.parts[0].exercises} />
+      <Part part2 = {props.course.parts[1].name} exercises2 = {props.course.parts[1].exercises} />
+      <Part part3 = {props.course.parts[2].name} exercises3 = {props.course.parts[2].exercises} />
+    </div>
+  )
+}
+ 
+const Part = (props) => {
+  return(
+  <div>
+    <p>{props.part1} {props.exercises1}</p>
+    <p>{props.part2} {props.exercises2}</p>
+    <p>{props.part3} {props.exercises3}</p>
+  </div>
+  )
+}
+ 
 const App = () => {
-  const course = 'Lenguajes Web'
-  const part1 = 'Introduction to React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a Component'
-  const exercises3 = 14 
-  const contenido = [
-    {key: '1', titulo: part1, ejercicios: exercises1},
-    {key: '2', titulo: part2, ejercicios: exercises2},
-    {key: '3', titulo: part3, ejercicios: exercises3}
-  ]
+  const course = {
+    name: 'Web languages',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7
+      },
+      {
+        name: 'State of a component',
+        exercises: 14
+      }
+    ]
+  }
+ 
 
   return (
     <div>
       <Header course = {course} />
-      <Content array = {contenido}/>
-      <Total Total = {exercises1 + exercises2 + exercises3} />
+      <Content course = {course}/>
+      <Total course = {course} />
     </div>
-  )
-}
+      )
+    
+  }
+    
 
 root.render(<App />)
